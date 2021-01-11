@@ -74,3 +74,31 @@ log(1000,10)
 #Logaritmo en base 10 de 1000 (igual que el anterior)
 log10(1000)
 
+exp(1)
+
+log(pi)
+
+#valor absoluto
+abs(-pi)
+  
+#Factorial. Producto de un numero de entero por los anteriores: 3!= 3*2*1 = 6
+
+factorial(3)
+
+factorial(4)
+
+factorial(7)
+
+#Solo funcionan con enteros. Ejemplo de negativo:
+factorail(-5)
+factorial(-5)
+
+#**Metodo choose**: Numero combinatorio coeficiente binomial que define la forma de ordenar n elementos tomados de n en m. Queremos sacar un subconjunto de n elementos de un total de m.
+# Si tuvieramos 5 platos y quisiera comer 3 de ellos, de cuantas formas podría comerlos:
+choose(5,3)
+#Habria 10 formas de comerlos.
+
+#Los numeros que aparecen dentro de los parentesis de una funcion son ARGUMENTOS. Hay funciones que usan 1 argumento (factorial(1)) y otras que pueden usar mas (log(2,3)). En el caso de que existan varios elementos, se separan por comas ",". Da lo mismo cuantos espacios pongas entre medias, se separan por coma.
+#Ejemplo:
+6^log(4,6)
+log(4^6, 4)
