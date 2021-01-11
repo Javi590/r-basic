@@ -102,3 +102,42 @@ choose(5,3)
 #Ejemplo:
 6^log(4,6)
 log(4^6, 4)
+
+#curiosidad: Triangulo de Pascal o triangulo de Tartaria. Esta formado por los numeros binomiales apilados uno debajo de otro. Sumando dos cualesquiera obtienes el de abajo. Se corresponden con los coeficientes del binomio de Newton.
+
+  choose(3,1)
+
+  choose (5,2)
+
+  choose(5,3)
+
+  
+  #Funciones trigonometricas.Cuando se trata de utilizar funciones trigonometricas, R entiende que los argumentos de estas funciones, vendran dados en radianes. Si queremos aplicar una funcion a un numero que en lugar de radianes esta en grados,hay que hacer una regla de tres:
+  #Para pasar de grados a radianes multiplicamos por pi y dividimos por 180 ((n*pi)/180).O al utilizar arco seno, arco coseno o arco tangente (tambien están en radianes) habrá que aplicar la misma formula para pasar de grados a radianes.
+  #Ejemplo:
+  sin(pi/2)
+  cos(pi)
+  tan(0)  
+#La circunferencia goniometrica, relaciona los grados con los radianes. 0,2 pi corresponde con el angulo plano y crece en sentido antihorario (hacia arriba y a la izquierda)
+  #1/6pi serían 30 grados, pi/4 serían 45, pi/3 serían 60, pi/2 serían 90...
+ 
+  cos(60)
+ #Sería negativo: iría más a la izquierda y no sería valido. Sería un angulo de 175.
+  #Para pasarlo al angulo de 60 grados:
+  cos(60*pi/180)
+  sin(60*pi/180)
+  #El seno de 60 o de 60pi/180 son diferentes.
+  
+  tan(pi)#=-1.224647e-16 ~0
+  
+  tan(pi/2) #1.633124e+16 ~ Inf
+  
+  #Arcoseno, arcocoseno, arcotangente: Nos da el angulo cuyo seno, coseno o tangente coincide con el valor X (los argumentos anteriores de las funciones de seno, coseno, tangente)
+  # si antes hemos hecho sin(60*pi/180) y ha dado 0,86, el angulo cuyo seno vale eso (arcoseno de 0,86) da 1,04.
+  
+  asin(0.8660254)# da 1.047198, no coincide, lo da en radianes.
+  
+  asin(0.8660254)*180/pi #arc sin en grados. (Salen 60 grados)
+  
+#El seno o el coseno se encuentran entre 0 y 1. Si pedimos el arcoseno de 5 o -8 dará NaN (Not a Number)
+  
