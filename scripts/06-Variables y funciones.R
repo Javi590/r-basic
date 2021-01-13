@@ -105,7 +105,7 @@ ls() #Para ver la lista de elementos del entorno que ya hemos introducido.
 #la funcion remove (rm) borra variables o funciones.
 
 rm(Edad) #Para borrar una variable de la lista
-rm(list=ls()) #Para borrar todas los objetos del entorno. Lo mismo que la *escoba* de la barra de herramientas del entorno.
+rm(list=ls()) # El parametro List es el argumento de la funcion. Para borrar todas los objetos del entorno. Lo mismo que la *escoba* de la barra de herramientas del entorno.
 
 # PARA CREAR NUESTRAS PROPIAS FUNCIONES
 
@@ -150,3 +150,5 @@ g(1,2,3) #= 20.94407
 g(1,-1,pi) # =  9.048685e-16
 
 #Las funciones no tienen por qué tener como argumentos o resultados números reales. También pueden devolver vectores, matrices, tablas de datos, etc.Se verán más adelante.
+
+
