@@ -107,3 +107,46 @@ ls() #Para ver la lista de elementos del entorno que ya hemos introducido.
 rm(Edad) #Para borrar una variable de la lista
 rm(list=ls()) #Para borrar todas los objetos del entorno. Lo mismo que la *escoba* de la barra de herramientas del entorno.
 
+# PARA CREAR NUESTRAS PROPIAS FUNCIONES
+
+#nombre_funcion = function(variable){function}
+
+#Se puede aplicar a cualquier variable, en lugar de incorporar la misma variable muchas veces, se trata de crear una funcion que lo haga por nosotros:
+
+Edad=4
+doble= function(Edad){2*Edad}
+doble(Edad) # = 8
+
+cuadrado=function(Edad){Edad^2}
+cuadrado(Edad)
+
+#Ejemplo:
+
+f= function(x) {
+  x^3-(3^x)*sin(x)
+}
+#Para que se compile en el entorno hay que poner el cursor dentro de la palabra function y ejecutar (ctrl. + enter). Se recomienda dar nombres significativos a las funciones, para simplificar su lectura.
+  
+  f(4) # = 125.301
+  f(Edad) # = 125.301
+  f(5) # = 358.0186
+  f(pi/2) # = -1.740645
+
+suma1 <- function(t){
+  t+1
+}
+suma1(6) # = 7
+suma1(-5)# = -4
+
+product=function(x,y){
+  x*y
+}
+product(7,5) # = 35
+
+g<- function(x,y,z){
+  exp(x^2+y^2) * sin(z)
+}
+g(1,2,3) #= 20.94407
+g(1,-1,pi) # =  9.048685e-16
+
+#Las funciones no tienen por qué tener como argumentos o resultados números reales. También pueden devolver vectores, matrices, tablas de datos, etc.Se verán más adelante.
