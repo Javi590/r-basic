@@ -1,0 +1,89 @@
+---
+title: "Pruebanueva"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Markdown
+
+## Latex y Chunks
+
+Prueba de Markdown en R:
+
+```{r}
+sqrt(2)-exp(2)
+```
+Con la librería Latex (Tinytex), se pueden escribir símbolos matemáticos:
+
+
+$\sqrt(2)-exp(2)$
+
+
+Para introducir las Chunks (Bloques de código), se usan __```{r nombre_de_la_chunk, echo=TRUE, comments=TRUE, message=TRUE, Warning=TRUE}``` __ también con __ctr+alt+i__
+
+
+## Reticulate:
+
+Instalamos reticulate invocando a su librería.
+
+La función use_python("/directoriodepython3") permite utilizar todos los paquetes, los 200 de Anaconda.
+
+Con py_install("nombre_de_librería") podemos cargar las librerías individualmente.
+
+Cuando creamos la variable en R os la asociamos a la función de importar(sistemaoperativo) que permite, evocando a dicha variable acceder a las funciones de python en R, como listdir("."), que crea un listado de los ficheros que se encuentran en la ubicación del markdown (de momento):
+
+
+
+```{r instalar_y_usar_python_en_R, echo=TRUE}
+library(reticulate)
+
+use_python("usuarios/jtruj/Anaconda/python")
+py_install("numpy")
+
+os <- import("os")
+os$listdir(".")
+```
+
+#### Curioso
+Se puede ejecutar el py_run_file("fichero") para ejecutar el programa principal del script (**main**) que queramos. Si tenemos una clase podemos ejecutar el programa principal de cada clase e incluso acceder a  las variables que se generen dentro de esa clase.
+
+
+```{r}
+source_python("ad.py")
+add(3,4)
+```
+
+### Conversion de objetos de un lenguaje a otro
+
+Importamos librería numpy
+
+```{r numpy, echo=TRUE}
+np <- import("numpy",convert = FALSE)
+
+x <- np$array(c(1:4)) #Hacemos un array de numpy (python)
+
+# **Array/s: El módulo array define una estructura de datos de secuencia que se ve muy parecida a una list , excepto que todos los miembros tienen que ser del mismo tipo primitivo. Los tipos admitidos son todos numéricos u otros tipos primitivos de tamaño fijo como bytes. Son vectores.**
+
+sum <-x$cumsum() 
+print(sum)
+#Función de suma acumulada de pyhton asociada a la variable sum de R.
+
+
+#Si queremos hacer la conversión explícita de python a R:
+py_to_r(sum)
+
+```
+
+
+## Ayuda
+```{r Ayuda, echo=TRUE}
+py_help(os$chdir) # **chdir: Cambia el directorio de trabajo al directorio especificado, el cual debe estar especificado como string (cadena de caracteres)**
+
+help(py_to_r)
+```
+
