@@ -87,3 +87,78 @@ py_help(os$chdir) # **chdir: Cambia el directorio de trabajo al directorio espec
 help(py_to_r)
 ```
 
+
+## Arrays 
+
+```{r crearmos_un_array, echo=TRUE}
+a <- np_array(c(1:10), dtype=("float16"))
+
+a # Mostramos a
+
+#Se crea el objeto que es de pyhton desde R.
+
+b <- np_array(c(1:10), order="C") # Con __order=""__ Se le indica que para crearlo se utilice el estilo de guardado en memoria de **C** en lugar del estilo de forttrump, que es el que utiliza python para optimizar los calculos de muchos números. 
+
+# Lo mismo ocurre con los **dataframes**: un dataframe de R se suele convertir directamente a un dataframe de Pandas, de modo que la regla es conservar filas y columnas, salvo por el hecho de que los factores de R no existen en Python, se convierten en variables categoricas. El problema más gordo suele venir con las fechas: cuidado cuando manejemos fechas en R en formato posixs porque se convertiran a columnas de datos numericos en numpy con el tipo de dato datetime de 64 bits.
+
+b # Mostramos b
+
+```
+### Si queremos utilizar algo directamente en python de forma natural, abrimos una chunk en pyhton:
+
+
+```{python escribir_directamente_en_python, echo=TRUE}
+import numpy as np
+import pandas as pd # No ha corrido pandas, lo instalo por consola en R (py_install("pandas")
+
+
+```
+
+Reticulate nos permite enviar datos desde R hasta python (convertir variables de un lenguaje a otro), de modo que si cargamos un data set. Creamos unos datos y metemos el dataset de iris. Si quisieramos consultar los primeros datos haríamos la funcion head. La información que muestra es en R
+
+```{r cargamos_dataframe_en_r} 
+datos <- iris 
+head(datos)
+```
+
+### Si quisieramos utilizar el dataset (los datos) en python, tendríamos que pasar la información a python desde la chunk de r (generalmente), creando una variable llamada datos_py, que toma la tranformación de "datos"(dataframe de r) de r a python:
+
+```{r transformamos_datos_de_r_a_python, echo=TRUE}
+datos_py <- r_to_py(datos)
+```
+
+Y posteriormente, desde la chunk de python y con la función **r.** accedemos a cualquier módilo, función, variable, clase.. de r expuesta a python a trqavés de r_to_py:
+
+```{python utilizando_r_to_py, echo=TRUE}
+r.datos_py
+```
+Este dataset es de Pandas (python) porque la lista empieza por 0.
+
+
+### Sparse Matrix. Matrices que son en la gran mayoría 0, menos una posición. Dependen del paquete matrix.
+
+```{r}
+library(Matrix)
+N <- 6
+set.seed(123)
+sparse_mat <- sparseMatrix(
+  i= sample (N,N, replace = F), #Filas, aleatorias sin reemplazo
+  j= sample (N,N, replace = F),
+  x = runif(N), # número aleatorio uniforme entre 0 y N
+  dims= c(N,N) #Dimensiones de la matriz
+)
+
+sparse_mat
+
+# Ahora utilizamos la función R to py:
+sparse_mat_py<- r_to_py(sparse_mat) # No me rula el tema, pone que hay error en x, compruebo código y va bien. Vuelvo a cargar numpy, y tampoco. SOLUCIONADO: Instalo por consola py_install("scipy").
+```
+
+```{python}
+r.sparse_mat_py
+```
+
+```{r}
+py_to_r(sparse_mat_py)
+```
+
