@@ -20,7 +20,7 @@ $\cdot$ fix(x): para modificar visualmente el vector x.
 $\cdot$ rep(a,n): para definir un vector constante que contiene el dato a repetido n veces.
 
 
-```{r creando_vectores_en_R, echo=TRUE}
+
 c(1,2,3) #columnas
 
 scan() #Para escanear datos que escribamos por consola
@@ -28,7 +28,7 @@ scan() #Para escanear datos que escribamos por consola
 fix(x) # Cuando tenemos un vector definido en una variable x. Podemos hacer fix de x para modificar visualmente el vector x con nuestro editor de texto favorito.
 
 rep(5,7) #Para repetir el mismo numero, caracter, elemento, n veces.
-```
+
 ### No puede haber un vector con tipos de elementos mezclados:
 
 $\cdot$ logical: TRUE or FALSE
@@ -47,6 +47,9 @@ Si tenemos mezclas heterogéneas, se convertirirá en el tipo de dato superior e
 
 La función scan() tiene distintos separadores en función del tipo de dato utilizado. Por ejemplo, para caracteres es un espacio, y para decimales un punto ("."). Si prevemos que los datos van a usar un separador diferente lo podemos indicar con: scan(dec=","), si vamos a usar una base de datos que utiliza separadores con coma, y no con punto.
 
+
+También podemos predeterminar el tipo de datos que cogeremos y que luego transformará la función scan() con scan(what="character")
+
 ```{r prueba_vectores, echo=TRUE}
 #Escribe tu año de nacimiento 10 veces:
 rep(1990,10)
@@ -59,5 +62,10 @@ vec<- c (16,  0,  1, 20,  1,  7, 88,  5 , 1,  9)
 
 fix(vec)
 vec
+
+scan(what = "character")
+# 1: Javier Pepe Manolo
+#"Javier" "Pepe"   "Manolo"
+
 ```
 
