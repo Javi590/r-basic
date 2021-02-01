@@ -69,7 +69,99 @@ scan(what = "character")
 
 ```
 
-## Progresiones aritméticas
+## Aplicar funciones a elementos de un vector (Operaciones vectoriales):
+
+Para sumar, multiplicar,elevar... los elementos de un vector se puede hacer directamente:
+
+```{r operar_con_elementos_de_un_vector, echo=TRUE}
+x <- 1:10
+x
+x+pi
+x*pi
+sqrt(x)
+2^(x)
+x^2
+```
+Sim embargo, a veces no es posible aplicar la funcion concreta directamente a un vector pasandolo como un argumento.
+
+Cuando queremos aplicar una funcion a cada uno de los elementos de un vector, pero no se puede hacer directamente. Utilizamos la funcion sapply(nombre_de_vector, FUN= nombre_funcion):
+
+
+```{r funcion_sapply, echo=TRUE}
+
+sapply(x, FUN = function(elemento){sqrt(elemento)})
+
+# Otro ejemplo, con regresión lineal (coeficiente de determinación). CUando hago directamente la regresion lineal de una serie de puntos lo que quiero ver es si se ajustan a la nube de puntos de una recta:
+
+cd= function(x){summary(lm((1:4)~c(1:3,x)))$r.squared}
+
+cd(4) # Da error, porque sería una recta perfecta (1-1,2-2, 3-3, 4-4)
+cd(5) #El coeficiente de determinación es 0.9657143
+cd(x) #No se puede aplicar una funcion que he inventado en un vector. Solo se puede aplicar en variables. Solo se puede con sapply:
+
+sapply(x, FUN = cd)
+```
+### Funciones que podemos aplicar a vectores:
+
+$\cdot$ length(x): Calcula la longitud de un vector.
+
+$\cdot$ max(x): calcula el máximo del vector.
+
+$\cdot$ min(x): calcula el minimo del vector.
+
+$\cdot$ sum(x): calcula la suma de las entradas del vector.
+
+$\cdot$ prod(x): calcula el producto de las entradas del vector.
+
+$\cdot$ mean(x): calcula la media aritmética de todas las entradas del vector.
+
+$\cdot$ diff(x): calcula el vector formado por las diferencias sucesivas entre entradas del vector original x. EL primero restado al segundo, el segundo al tercero, el tercero al cuarto...
+
+$\cdot$ cumsum(x): calcula el vector formado por las sumas acumuladas de las entradas del vector original x:
+ - permite definir sucesiones descritas mediante sumatorios.
+ - Cada entrada de cumsum(x) es la suma de las entradas de x hasta su posición.
+
+```{r ejemplos_funciones_y_vectores, echo=TRUE}
+
+cuadrado = function(x){x^2}
+v = c(1,2,3,4,5,6)
+sapply (v, FUN = cuadrado)
+
+mean(v) #media aritmetica de las entradas: 3.5
+
+cumsum(v) # sumas acumuladas: 1  3  6 10 15 21
+```
+#### Funciones para ordenar los elementos de un vector:
+
+
+$\cdot$ sort(x): Ordena el vector en orden natural de los objetos que lo forman: orden numerico creciente, orden alfabético...
+
+$\cdot$ rev(x): invierte el orden de los elementos del vector (pero no los ordena, el primero al ultimo, y así)
+
+```{r}
+v2= c(1,5,6,2,8,3)
+sort(v2) #1 2 3 5 6 8
+rev(v2) # 3 8 2 6 5 1
+```
+```{r ejercicio_funciones_y_vectores, echo=TRUE, results='hold'}
+# Combina las dos funciones anteriores, sort y rev para crear una funcion que dado un vector x os lo devuelva ordenado en orden decreciente:
+
+rev(sort(v2)) #8 6 5 3 2 1
+
+#Razona si aplicar primero sort y luego rev a un vector x daría en eneral el mismo resultado que aplicar primero rev y luego sort.
+
+## Sería distinto, ya que el primero ordena lógicamente y el segundo invierte el orden del vector original.
+
+# Investiga la documentacion de la funcion sort (recuerda que puedes usar la sintaxis __?sort__ en la consola) para leer si cambiando algún argumento de la misma podéis obtener el mismo resultado que has programado en el primer ejercicio:
+?sort
+
+## Se puede invertir el orden de sort(x) incluyendo el atributo decreasing=TRUE:
+
+sort(v2, decreasing = TRUE) #8 6 5 3 2 1
+```
+
+
+## Progresiones aritméticas (para generar vectores)
 
 $seq(a,b, by=d)$: Para generar una progresión aritmética de diferencia d que empieza en a hasta llegar a b.
 
@@ -79,7 +171,7 @@ $seq(a,by=d, length.out=n)$: define la progresión aritmética de longitud n y d
 
 $a:b$: define la secuencia de números enteros $Z$ consecutivos entre dos números a y b.
 
-```{r ejercicios_secuencias, echo=TRUE, results='markup'}
+```{r ejercicios_secuencias, echo=TRUE, results='asis'}
 #Imprime los números del 1 al 20
 1:20
 
