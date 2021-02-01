@@ -1,0 +1,40 @@
+---
+title: "08.1-Binomio_de_Newton_JTG"
+author: "JTG"
+date: "1/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Producto notable:
+
+La fórmula del producto notable es $$(a+b)^2 = a^2 + 2ab + b^2$$
+
+## Funcion que nos calcule el producto notable:
+
+```{r productonotable_BN, echo=TRUE}
+binomionewton2= function(a,b){
+  a^2 + 2*a*b + b^2
+}
+
+binomionewton2(1,2)
+binomionewton2(2,1)
+```
+# Binomio de Newton:
+
+Su formula es: $$(a+b)^n = \sum_{k=0} ^n {n\choose k}\cdot a^{n-k} \cdot b^k = {n\choose 0}*a^n*b^0 + \cdots {n\choose n}* a^0 * b^n $$
+
+## Funcion con R
+```{r Binomio_newton, echo=TRUE}
+
+binomionewton = function(a,b,n){
+  cumsum (choose(n,(0:n))*a^{n - (0:n)}* b^(0:n))[n+1]
+}
+
+binomionewton(2,1,2) # El vector nos lo ha creado cumsum, pero el que nos interesa es el último, que es el resultado del binomio de Newton (la suma de todos sus componentes). Le faltaría llamar a la ultima entrada, y siempre habría alguna más (n).Para ello se añade [n+1] en la funcion.
+binomionewton(3,4,14)
+```
+
