@@ -1,0 +1,63 @@
+---
+title: "08_Vectores_en_R_JTG"
+author: "JTG"
+date: "31/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Cómo definir un vector en R:
+
+$\cdot$ C(): para definir un vector.
+
+$\cdot$ scan(): para definir un vector.
+
+$\cdot$ fix(x): para modificar visualmente el vector x.
+
+$\cdot$ rep(a,n): para definir un vector constante que contiene el dato a repetido n veces.
+
+
+```{r creando_vectores_en_R, echo=TRUE}
+c(1,2,3) #columnas
+
+scan() #Para escanear datos que escribamos por consola
+
+fix(x) # Cuando tenemos un vector definido en una variable x. Podemos hacer fix de x para modificar visualmente el vector x con nuestro editor de texto favorito.
+
+rep(5,7) #Para repetir el mismo numero, caracter, elemento, n veces.
+```
+### No puede haber un vector con tipos de elementos mezclados:
+
+$\cdot$ logical: TRUE or FALSE
+
+$\cdot$ integer: números enteros $Z$
+
+$\cdot$ numeric: números reales $R$
+
+$\cdot$ complex: numeros complejos $C$
+
+$\cdot$ character: palabras
+
+EL orden de conversión entre tipos es el inverso del mostrado arriba: de character -> complex -> numeric -> integer -> logical
+
+Si tenemos mezclas heterogéneas, se convertirirá en el tipo de dato superior en dicha escala.
+
+La función scan() tiene distintos separadores en función del tipo de dato utilizado. Por ejemplo, para caracteres es un espacio, y para decimales un punto ("."). Si prevemos que los datos van a usar un separador diferente lo podemos indicar con: scan(dec=","), si vamos a usar una base de datos que utiliza separadores con coma, y no con punto.
+
+```{r prueba_vectores, echo=TRUE}
+#Escribe tu año de nacimiento 10 veces:
+rep(1990,10)
+
+# Define un vector llamado vec con los siguientes datos: 16  0  1 20  1  7 88  5  1  9
+
+vec<- c (16,  0,  1, 20,  1,  7, 88,  5 , 1,  9)
+
+#Y modificar la cuarta posición por nuestro año de nacimiento:
+
+fix(vec)
+vec
+```
+
