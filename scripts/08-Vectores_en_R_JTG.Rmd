@@ -69,3 +69,27 @@ scan(what = "character")
 
 ```
 
+## Progresiones aritméticas
+
+$seq(a,b, by=d)$: Para generar una progresión aritmética de diferencia d que empieza en a hasta llegar a b.
+
+$seq(a,b, length.out=n)$: define progresión aritmética de longitud n que va de a hasta b con diferencia d. Por tanto $d= (b-a)/(n-1)$
+
+$seq(a,by=d, length.out=n)$: define la progresión aritmética de longitud n y diferencia d que empieza en a.
+
+$a:b$: define la secuencia de números enteros $Z$ consecutivos entre dos números a y b.
+
+```{r ejercicios_secuencias, echo=TRUE, results='markup'}
+#Imprime los números del 1 al 20
+1:20
+
+#Imprime los 20 primeros números pares:
+
+seq(2, length.out = 20, by=2)
+
+#Imprime 30 números equidistantes entre el 17 y el 98, mostrando solo 4 cifras significativas:
+
+round(seq(17,98, length.out = 30),digits= 4)
+
+```
+
