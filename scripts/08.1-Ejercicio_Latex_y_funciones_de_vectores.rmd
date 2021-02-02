@@ -37,4 +37,117 @@ binomionewton = function(a,b,n){
 binomionewton(2,1,2) # El vector nos lo ha creado cumsum, pero el que nos interesa es el último, que es el resultado del binomio de Newton (la suma de todos sus componentes). Le faltaría llamar a la ultima entrada, y siempre habría alguna más (n).Para ello se añade [n+1] en la funcion.
 binomionewton(3,4,14)
 ```
+# Subvectores
+
+$\cdot$ vector [i]; da la i-ésima parte del vector
+
+  - Los íncides en R empiezan en 1.
+  
+  - vector[length(vector)]: nos da la última entrada del vector.
+  
+  - vector[a:b]: si a y b son números naturales, nos da el subvector con las entradas vector original que van de la posición a-ésima hasta b-ésima.
+  
+  - vector[-i] Si i es un numero, este subvector está formado por todas las entradas del vector original menos la entrada i-ésima. Si i resulta ser un vector,           entonces es un vector de índices y crea un nuevo vector con las entradas del vector original, cuyos índdices pertenecen a i.
+  
+  - vector[-x]: Si es un vector (de índices), entonces este es el complementario de vector[x]
+
+### También podemos utilizar operadores lógicos:
+
+- ==: $=$
+- !=: $\ne$
+- >= :$\ge$
+- <= : $\le$
+- < : $<$
+- > : $>$
+- ! : No lógico
+- & : Y lógico
+- | : O lógico
+
+
+```{r ejemplos_subvectores, echo=TRUE}
+
+v= c(14,5,6,19,32,0,8)
+v[2] #Posición 2 del vector v
+
+v[-c(3,5)] #Vector menos los colocados en la columna 3 y 5 (6 y 32 no aparecen)
+
+v[v != 19 & v>15] #Filtro que el propio vector sea diferente de 19 y menor que 15 es el 32.
+```
+### Condicionales
+
+- which (x cumple condición): para obtener los índices de las entradas del vector x que satisfacen la condición creada.
+
+- which.min(x): nos da la primera posición en la que el vector x toma su valor mínimo.
+
+- which(x==min(x)): da todas las posiciones en la que el vector x toma su valor máximo
+
+- which.max(x):nos da la primera posición en la que el vector x toma su valor máximo
+
+- which(x==max(x)): da todas las posiciones en las que el vector x toma sus valores máximos.
+
+__ No dirán cuál es el elemento mas grande o cumple una condición, sino que nos darán la posicion en elvector de los elementos que la cumplan.__
+
+```{r mas_ejemplos_subvectores, echo=TRUE}
+x =seq(3,50, by= 3.5)
+x
+
+x[3] #Posición 3 =10
+x[8] #posición 8 = 27.5
+x[length(x)] # última posición
+x[length(x)-1] # Penúltima posición
+x [length(x)-2] # Antepenúltima posición
+
+x[-3] #todo el vector menos la tercera posición
+x[4:8] #Los elementos desde la 4 a la 8 posición
+x[8:4] #El vector de los elementos entre 4 y 8 en orden inverso.
+
+x[seq(2, length(x), by=2)] # Empieza en la 2 posición hasta el final dando saltos de 2.
+x[-seq(2, length(x), by=2)] #Elimina los pares
+
+
+x[(length(x)-3):length(x)] # Muestra las 3 últimas posiciones antes del final junto con la última posición (4 en total). OJO CON EL PARÉNTESIS [()]
+
+x[c(1,5,6)] # Posiciones 1, 5 y 6
+x[x>30] #mayores de 30
+x[x>20 & x<40 #mayores que 20 y menores que 40
+x[x!=3 & x !=17] #No son iguales a 3 y 17
+x[x<19 | x<40] #los menores de 10 por un lado y los mayores de 40 por otro
+x[x>=10] #mayor o igual a 10
+x[!x<10] #x NO es menor de 10
+
+
+x[x%%2 ==0] #cuyo resto entre 2 es 0
+x[x%%2==1] #cuyo resto entre 2 es 1
+
+
+x>30 #Te indica si es verdadero o falso (condición Booleana)
+x[x>30] #te muestra las posiciones para las que se cumplen la condición booleana.
+
+x= c(1,7,4,2,4,8,9,2,0)
+y= c(5,2,-3,-7,-1,4,-2,7,1)
+x[y>0] #Elementos de x cuyo análogo en Y son positivos. Siempre que sean de la misma longitud.
+
+
+which(x>4) #POsiciones
+x[which(x>4)] #Elementos
+which(x >2 & x< 8) #Posiciones
+x[which(x>2 &x<8)] #Elementos
+which(x<5 | x%%2==0) #Posiciones
+x[which(x<5 | x%%2==0)] #Elementos
+
+which.min(x) #el minimo está en la pos. 9
+which (x == min(x)) #si hay más de uno
+
+which.max(x)
+which (x ==max(x))
+fix(x) #se ha modificado el vector para incluir más maximos
+```
+
+### Si no se cumple la condición:
+```{r no_condicion, echo=TRUE}
+x[x>4 & x<7] # numeric(0) Inica el tipo de elementos del vector y que está vacío para esa condición.
+which(x>4 & x<7) #integer(0) Devuelve posiciones, no números, no sabe de que tipo son.
+
+```
+# Los valores NA
 
