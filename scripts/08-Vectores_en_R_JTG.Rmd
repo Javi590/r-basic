@@ -5,7 +5,7 @@ date: "31/1/2021"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup_knit, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -20,14 +20,16 @@ $\cdot$ fix(x): para modificar visualmente el vector x.
 $\cdot$ rep(a,n): para definir un vector constante que contiene el dato a repetido n veces.
 
 
-
+```{r pruebas_definir_vectores, echo=TRUE}
 c(1,2,3) #columnas
 
 scan() #Para escanear datos que escribamos por consola
 
-fix(x) # Cuando tenemos un vector definido en una variable x. Podemos hacer fix de x para modificar visualmente el vector x con nuestro editor de texto favorito.
+fix(x) # Cuando tenemos un vector definido en una variable x. Podemos hacer fix de x para modificar manualmente el vector x con nuestro editor de texto favorito (bloc de notas)
 
 rep(5,7) #Para repetir el mismo numero, caracter, elemento, n veces.
+```
+
 
 ### No puede haber un vector con tipos de elementos mezclados:
 
@@ -45,11 +47,12 @@ EL orden de conversión entre tipos es el inverso del mostrado arriba: de charac
 
 Si tenemos mezclas heterogéneas, se convertirirá en el tipo de dato superior en dicha escala.
 
-La función scan() tiene distintos separadores en función del tipo de dato utilizado. Por ejemplo, para caracteres es un espacio, y para decimales un punto ("."). Si prevemos que los datos van a usar un separador diferente lo podemos indicar con: scan(dec=","), si vamos a usar una base de datos que utiliza separadores con coma, y no con punto.
+La función __scan()__ tiene distintos separadores en función del tipo de dato utilizado. Por ejemplo, para caracteres es un espacio, y para decimales un punto ("."). Si prevemos que los datos van a usar un separador diferente lo podemos indicar con: __scan(dec=",")__, si vamos a usar una base de datos que utiliza separadores con coma, y no con punto.
 
 
-También podemos predeterminar el tipo de datos que cogeremos y que luego transformará la función scan() con scan(what="character")
+También podemos predeterminar el tipo de datos que cogeremos y que luego transformará la función scan() con __scan(what="character")__
 
+##### Prueba con vectores:
 ```{r prueba_vectores, echo=TRUE}
 #Escribe tu año de nacimiento 10 veces:
 rep(1990,10)
@@ -58,49 +61,51 @@ rep(1990,10)
 
 vec<- c (16,  0,  1, 20,  1,  7, 88,  5 , 1,  9)
 
-#Y modificar la cuarta posición por nuestro año de nacimiento:
+#Y modificar la cuarta posición por nuestro año de nacimiento. Se pedía por fix, pero lo hago de otra forma para que al generar knit no me de por saco:
 
-fix(vec)
+vec[4] = 1990
 vec
 
-scan(what = "character")
-# 1: Javier Pepe Manolo
-#"Javier" "Pepe"   "Manolo"
+# scan(what = "character") Esto te pide (por consola, introducir los datos que quieras. No sé muy bien el fin de ello
 
 ```
+
 
 ## Aplicar funciones a elementos de un vector (Operaciones vectoriales):
 
 Para sumar, multiplicar,elevar... los elementos de un vector se puede hacer directamente:
 
 ```{r operar_con_elementos_de_un_vector, echo=TRUE}
-x <- 1:10
-x
-x+pi
-x*pi
-sqrt(x)
-2^(x)
-x^2
+t <- 1:10
+t
+t+pi
+t*pi
+sqrt(t)
+2^(t)
+t^2
 ```
 Sim embargo, a veces no es posible aplicar la funcion concreta directamente a un vector pasandolo como un argumento.
 
-Cuando queremos aplicar una funcion a cada uno de los elementos de un vector, pero no se puede hacer directamente. Utilizamos la funcion sapply(nombre_de_vector, FUN= nombre_funcion):
+Cuando queremos aplicar una funcion a cada uno de los elementos de un vector, pero no se puede hacer directamente. Utilizamos la funcion sapply (nombre_de_vector, FUN= nombre_funcion):
 
 
 ```{r funcion_sapply, echo=TRUE}
 
-sapply(x, FUN = function(elemento){sqrt(elemento)})
+sapply(t, FUN = function(elemento){sqrt(elemento)})
 
 # Otro ejemplo, con regresión lineal (coeficiente de determinación). CUando hago directamente la regresion lineal de una serie de puntos lo que quiero ver es si se ajustan a la nube de puntos de una recta:
 
-cd= function(x){summary(lm((1:4)~c(1:3,x)))$r.squared}
+cd= function(t){
+  summary(lm((1:4)~c(1:3,t)))$r.squared
+  }
 
-cd(4) # Da error, porque sería una recta perfecta (1-1,2-2, 3-3, 4-4)
+cd(4) #Da error, porque sería una recta perfecta (1-1,2-2, 3-3, 4-4)
 cd(5) #El coeficiente de determinación es 0.9657143
-cd(x) #No se puede aplicar una funcion que he inventado en un vector. Solo se puede aplicar en variables. Solo se puede con sapply:
+# cd(t) ERROR!!! No se puede aplicar una funcion que he inventado en un vector. Solo se puede aplicar en variables. Solo se puede con sapply:
 
-sapply(x, FUN = cd)
+sapply(t, FUN = cd)
 ```
+
 ### Funciones que podemos aplicar a vectores:
 
 $\cdot$ length(x): Calcula la longitud de un vector.
@@ -123,7 +128,7 @@ $\cdot$ cumsum(x): calcula el vector formado por las sumas acumuladas de las ent
 
 ```{r ejemplos_funciones_y_vectores, echo=TRUE}
 
-cuadrado = function(x){x^2}
+cuadrado = function(t){t^2}
 v = c(1,2,3,4,5,6)
 sapply (v, FUN = cuadrado)
 
@@ -138,40 +143,44 @@ $\cdot$ sort(x): Ordena el vector en orden natural de los objetos que lo forman:
 
 $\cdot$ rev(x): invierte el orden de los elementos del vector (pero no los ordena, el primero al ultimo, y así)
 
-```{r}
+```{r ordenar_elementos_vector, echo=TRUE}
 v2= c(1,5,6,2,8,3)
-sort(v2) #1 2 3 5 6 8
-rev(v2) # 3 8 2 6 5 1
+sort(v2)
+rev(v2)
 ```
-```{r ejercicio_funciones_y_vectores, echo=TRUE, results='hold'}
+```{r ejercicio_funciones_y_vectores, echo=TRUE}
 # Combina las dos funciones anteriores, sort y rev para crear una funcion que dado un vector x os lo devuelva ordenado en orden decreciente:
 
-rev(sort(v2)) #8 6 5 3 2 1
+rev(sort(v2))
 
 #Razona si aplicar primero sort y luego rev a un vector x daría en eneral el mismo resultado que aplicar primero rev y luego sort.
 
 ## Sería distinto, ya que el primero ordena lógicamente y el segundo invierte el orden del vector original.
 
-# Investiga la documentacion de la funcion sort (recuerda que puedes usar la sintaxis __?sort__ en la consola) para leer si cambiando algún argumento de la misma podéis obtener el mismo resultado que has programado en el primer ejercicio:
-?sort
+# Investiga la documentacion de la funcion sort (recuerda que puedes usar la sintaxis __?sort__ en la consola) para leer si cambiando algún argumento de la misma podéis obtener el mismo resultado que has programado en el primer ejercicio: ?sort
 
 ## Se puede invertir el orden de sort(x) incluyendo el atributo decreasing=TRUE:
 
-sort(v2, decreasing = TRUE) #8 6 5 3 2 1
+sort(v2, decreasing = TRUE)
 ```
 
 
 ## Progresiones aritméticas (para generar vectores)
 
-$seq(a,b, by=d)$: Para generar una progresión aritmética de diferencia d que empieza en a hasta llegar a b.
+Secuencias:
 
-$seq(a,b, length.out=n)$: define progresión aritmética de longitud n que va de a hasta b con diferencia d. Por tanto $d= (b-a)/(n-1)$
+$seq (a,b, by=d)$: Para generar una progresión aritmética de diferencia d que empieza en a hasta llegar a b.
 
-$seq(a,by=d, length.out=n)$: define la progresión aritmética de longitud n y diferencia d que empieza en a.
+$seq (a,b, length.out=n)$: define progresión aritmética de longitud n que va de a hasta b con diferencia d. Por tanto $d= (b-a)/(n-1)$
+
+$seq (a,by=d, length.out=n)$: define la progresión aritmética de longitud n y diferencia d que empieza en a.
 
 $a:b$: define la secuencia de números enteros $Z$ consecutivos entre dos números a y b.
 
-```{r ejercicios_secuencias, echo=TRUE, results='asis'}
+
+##### Pruebas con secuencias
+
+```{r ejercicios_secuencias, echo=TRUE}
 #Imprime los números del 1 al 20
 1:20
 
@@ -184,11 +193,12 @@ seq(2, length.out = 20, by=2)
 round(seq(17,98, length.out = 30),digits= 4)
 
 ```
+
 ## Ejercicio práctico: El binomio de Newton (08.1)
 
 # Subvectores
 
-$\cdot$ vector [i]; da la i-ésima parte del vector
+$\cdot$ __Vector [i]__; da la i-ésima parte del vector
 
   - Los íncides en R empiezan en 1.
   
@@ -202,15 +212,15 @@ $\cdot$ vector [i]; da la i-ésima parte del vector
 
 ### También podemos utilizar operadores lógicos:
 
-- ==: $=$
+- $==$: $=$
 - !=: $\ne$
-- >= :$\ge$
-- <= : $\le$
-- < : $<$
-- > : $>$
-- ! : No lógico
-- & : Y lógico
-- | : O lógico
+- $>=$ :$\ge$
+- $<=$ : $\le$
+- $<$ : $<$
+- $>$ : $>$
+- $! $: No lógico
+- $& $: Y lógico
+- $| $: O lógico
 
 
 ```{r ejemplos_subvectores, echo=TRUE}
@@ -225,24 +235,24 @@ v[v != 19 & v>15] #Filtro que el propio vector sea diferente de 19 y menor que 1
 
 #### Condicionales
 
-- which (x cumple condición): para obtener los índices de las entradas del vector x que satisfacen la condición creada.
+- __which (x cumple condición): para obtener los índices de las entradas del vector x que satisfacen la condición creada.
 
-- which.min(x): nos da la primera posición en la que el vector x toma su valor mínimo.
+- __which.min(x)__: nos da la primera posición en la que el vector x toma su valor mínimo.
 
-- which(x==min(x)): da todas las posiciones en la que el vector x toma su valor máximo
+- __which(x==min(x))__: da todas las posiciones en la que el vector x toma su valor máximo
 
-- which.max(x):nos da la primera posición en la que el vector x toma su valor máximo
+- __which.max(x)__:nos da la primera posición en la que el vector x toma su valor máximo
 
-- which(x==max(x)): da todas las posiciones en las que el vector x toma sus valores máximos.
+- __which(x==max(x))__: da todas las posiciones en las que el vector x toma sus valores máximos.
 
-__ No dirán cuál es el elemento mas grande o cumple una condición, sino que nos darán la posicion en elvector de los elementos que la cumplan.__
+__No dirán cuál es el elemento mas grande o cumple una condición, sino que nos darán la posicion en elvector de los elementos que la cumplan.__ Para eso hace falta referirla a los elementos del vector (más abajo)
 
 ```{r mas_ejemplos_subvectores, echo=TRUE}
 x =seq(3,50, by= 3.5)
 x
 
-x[3] #Posición 3 =10
-x[8] #posición 8 = 27.5
+x[3] #Posición 3
+x[8] #posición 8
 x[length(x)] # última posición
 x[length(x)-1] # Penúltima posición
 x [length(x)-2] # Antepenúltima posición
@@ -259,7 +269,7 @@ x[(length(x)-3):length(x)] # Muestra las 3 últimas posiciones antes del final j
 
 x[c(1,5,6)] # Posiciones 1, 5 y 6
 x[x>30] #mayores de 30
-x[x>20 & x<40 #mayores que 20 y menores que 40
+x[x>20 & x<40] #mayores que 20 y menores que 40
 x[x!=3 & x !=17] #No son iguales a 3 y 17
 x[x<19 | x<40] #los menores de 10 por un lado y los mayores de 40 por otro
 x[x>=10] #mayor o igual a 10
@@ -290,13 +300,13 @@ which (x == min(x)) #si hay más de uno
 
 which.max(x)
 which (x ==max(x))
-fix(x) #se ha modificado el vector para incluir más maximos
+# fix(x) No lo uso para que knit no de por saco. En esta línea se modificaba el vector para incluir más maximos y ver un ejemplo más claro.
 ```
 
 #### Si no se cumple la condición:
 ```{r no_condicion, echo=TRUE}
-x[x>4 & x<7] # numeric(0) Inica el tipo de elementos del vector y que está vacío para esa condición.
-which(x>4 & x<7) #integer(0) Devuelve posiciones, no números, no sabe de qué tipo son.
+x[x>4 & x<7] # Inica el tipo de elementos del vector y que está vacío para esa condición.
+which(x>4 & x<7) #Devuelve posiciones, no números, no sabe de qué tipo son.
 
 ```
 # Los valores NA (No disponibles)
@@ -304,27 +314,105 @@ which(x>4 & x<7) #integer(0) Devuelve posiciones, no números, no sabe de qué t
 Podemos pedir si cierta expresi´çon numerica es verdad o no:
 
 ```{r prueba_condiciones_booleanas, echo=TRUE}
-2^pi>pi^2 # FALSE
-2^pi #8.824978
-pi^2 # 9.869604
+2^pi>pi^2
+2^pi
+pi^2
 
-12345678%%9 ==0 #TRUE
-12345678/9 #1371742
+12345678%%9 ==0
+12345678/9
 
+
+length(1:100) >4
+length(1:100) >400
+
+x =1:10
+x[3]
+x[3] =32
+x
+
+x[11]
+x[11] =15 #(ha añadido un 15 en la 11 posición)
+x
+
+
+x [2:5] =x[2:5] +3 #Entre las posiciones 2 y 5 sumo 3:
+x
+
+x[(length(x)-2):length(x)] = 0
+x #los últimos números han pasado a ser 0
+
+x[length(x)+5] = 9 #Ultima posición + 5. Los valores entre medias son desconocidos.
+x
 
 ```
 
+El NA se aplica cuando no conocemos un valor (encuesta, ns/nc, datos corruptos...).
+
+Una funcion aplicada a un vector con un NA tenderá a generar NA's, y no seguirá calculando: 
 
 
-Una funcion aplicada a un vector con un NA tenderá a generar NA's. Sin embargo, se pueden calcular vectores con NA;
+```{r creando_na, echo=TRUE}
+sum(x)
+prod(x)
+cumsum(x)
+mean(x)
+```
+Sin embargo, se pueden calcular vectores con NA. Ya que casi todas las funciones permiten introducir un parámetro para operar con ellos: __na.rm=TRUE__ Para que la función __solo tenga en cuenta los valores que NO son NA__
 
-$\cdot$ na.rm=TRUE (quita los NA)
+```{r funcion_NA_Remove}
+sum(x, na.rm= TRUE)
+mean(x, na.rm=TRUE) 
+# cumsum(x,na.rm=TRUE) ERROR!!!! in cumsum(x, na.rm = TRUE) cumsum y algunas funciones, NO admiten na.rm, hay que hacerlo con !is.na (más abajo)
+```
 
-La funcion which(x ==NA) NO FUNCIONA.
+También podemos extraer las entradas de NA's dentro de un vector: 
 
-$\cdot$ is.na(x) Te indica si hay algún valor NA
+La funcion __which(x ==NA)__ NO FUNCIONA. En su lugar podemos usar la función __is.na(x)__ Que nos devuelve los indices cuyas entradas contienen valores NA.
 
-La función cumsum(x) no admite el valor na.rm. En su lugar, se usa cumsum(x[!is.na(x)]), que los elimina
+También podemos combinarla con la función which para que nos indique las posiones:
+
+```{r probando_is_na}
+is.na(x)
+
+which(is.na(x)) # En dichas posiciones hay valores NA
 
 
-na.omit(x) Omite los NA del vector, pero siguen estando ahí.
+x[which(is.na(x))] # Para consultar exactamente esos valores.
+
+```
+
+### Sustituir valores NA por otro valor (uso habitual: media)
+
+Se que en ciertas posiciones hay NA, pero como no son valores correctos para trabajar, se suelen reemplazar por la media:
+
+```{r reemplazar_valores_na}
+y=x # Clonamos el vector x en un nuevo vector y (para hacerlo limpio)
+y
+
+y[is.na(y)] #Nos da 4 elementos en los que hay NA
+
+y[is.na(y)] = mean(y, na.rm = TRUE) # Hacemos que los valores NA sean igual a la media de los elementos del vector sin NA's.
+y
+
+x[!is.na(x)] # Le pido los valores que NO son NA. De modo que podemos omitirlos al realizar operaciones:
+  sum(x[!is.na(x)])
+  cumsum(x[!is.na(x)]) 
+
+```
+
+### Otra opción, eliminar NA's:
+
+
+```{r na_omit, echo=TRUE}
+na.omit(x) # Omite los NA del vector, pero siguen estando ahí. Esta función lanza dos atributos (attr), las posiciones que han sido eliminadas ("na.action), y la acción que ha realizado ("class"). que se pueden eliminar con attr(nombre_variable, "nombre_atributo) =NULL
+
+x_clean =na.omit(x)
+x_clean
+
+
+attr(x_clean, "na.action") = NULL
+attr(x_clean, "class") = NULL
+x_clean
+```
+
+
