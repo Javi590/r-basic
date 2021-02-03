@@ -203,8 +203,29 @@ v[v != 19 & v>15]
 
 <l class="definition">Factor</l>: es como un vector, pero con una estructura interna más rica que permite usarlo para clasificar observaciones
 
-- `levels`: atributo del factor. Cada elemento del factor es igual a un nivel. Los niveles clasifican las entradas del factor. Se ordenan por orden alfabético
-- Para definir un factor, primero hemos de definir un vector y trasformarlo por medio de una de las funciones `factor()` o `as.factor()`.
+- `levels`: atributo del factor. Cada elemento del factor es igual a un nivel. Los niveles clasifican las entradas del factor. Normalmente son palabras, y se ordenan por orden alfabético
+- Para definir un factor, primero hemos de definir un vector y trasformarlo por medio de una de las funciones `factor()` o `as.factor()`. Las funciones `as.` sirven para convertir un tipo de dato a otro. La diferencia entre uno y otro, por ejemplo, es si queremos definir un factor con más niveles que los creados previamente, se especificarían los niveles:
+
+```{r prueba_con_factores, echo=TRUE}
+gender = c( "M", "H", "H", "M", "M", "M","M", "H","H") #Se define un vector como una concatenación de elementos.
+gender.fact = factor(gender) # Se especifica el factor gender.fact como factor de gender
+gender.fact
+
+gender.fact2 = as.factor(gender) #Hasta aquí no hay mucha diferencia.
+gender.fact2
+
+gender.fact3 = factor(gender, levels = c("H", "M", "B")) #Se especifican los niveles con una concatenación de ellos.
+gender.fact3
+
+gender.fact4 = factor(gender, levels = c("H", "M","B"), labels = c("Hombre", "Mujer", "Hermafrodita"))
+gender.fact4 #Aquí nos sustituye los niveles por las etiquetas, se entiende mejor.
+
+
+levels(gender.fact4) #Para que imprima los niveles que tiene el factor.Tambiém permite cambiarlos:
+
+levels(gender.fact4) = c("Masculino", "Femenino", "Híbrido")
+gender.fact4
+```
 
 ## La función factor()
 
@@ -215,12 +236,37 @@ v[v != 19 & v>15]
     
 -  `levels(factor)`: para obtener los niveles del factor
 
+```{r mas_ejemplos_factores, echo=TRUE}
+
+notas = c(1,2,4,3,2,1,2,3,4,2,1,3,2)
+notas.fact = factor(notas)
+notas.fact
+
+levels(notas.fact) = c("Suspenso", "Suficiente", "Notable", "Excelente")
+notas.fact
+
+levels(notas.fact) = c("Suspenso", "Suspenso", "Aprobado", "Excelente") #Se cambian siguiendo el orden de los niveles preestablecidos: 1 y 2 Suspenso, 3 aprobado, 4 excelente
+notas.fact
+
+notas2 = c(5,4,6,9,7,3,1,7,5,10,6,6,7,5,8,4,5,9,6)
+notas2.fact = factor(notas2)
+notas2.fact
+
+levels(notas2.fact) = c("Al hoyo", "Ni de lejos", "Risión", "Casi,pero no", "Por los pelos", "Bien", "Notable", "Notable alto", "Sobresaliente", "Matrícula de Honor")
+notas2.fact
+```
 
 ## Factor ordenado
 
-<l class="definition">Factor ordenado.</l> Es un factor donde los niveles siguen un orden
+<l class="definition">Factor ordenado.</l> Es un factor donde los niveles siguen un orden.
+Hay factores simples (el orden no importa) y ordenados. Se puede crear un factor ordenado con:
 
 - `ordered(vector,levels=...)`: función que define un factor ordenado y tiene los mismos parámetros que factor
+
+
+```{r}
+ordered(notas, labels = c("suspenso", "aprobado", "notable", "excelente"))
+```
 
 
 ## Factores y factores ordenados
