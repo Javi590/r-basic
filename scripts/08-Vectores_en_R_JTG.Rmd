@@ -415,4 +415,214 @@ attr(x_clean, "class") = NULL
 x_clean
 ```
 
+# Lists
+
+## List
+
+<l class="definition">List.</l> Lista formada por diferentes objetos, no necesariamente del mismo tipo, cada cual con un nombre interno
+
+- `list(...)`: función que crea una list
+    - Para obtener una componente concreta usamos la instrucción `list$componente`
+    - También podemos indicar el objeto por su posición usando dobles corchetes: `list[[i]]`. Lo que obtendremos es una list formada por esa única componente, no el objeto que forma la componente
+
+
+## Obtener información de una list
+
+- `str(list)`: para conocer la estructura interna de una list
+- `names(list)`: para saber los nombres de la list
+
+
+## Obtener información de una list
+
+```{r}
+x = c(1,-2,3,4,-5,6,7,-8,-9,0)
+miLista = list(nombre = "X", vector = x, media = mean(x), sumas = cumsum(x))
+miLista
+```
+
+
+## Obtener información de una list
+
+```{r}
+str(miLista)
+names(miLista)
+```
+
+
+
+
+# Matrices
+
+## Cómo definirlas
+
+- `matrix(vector, nrow=n, byrow=valor_lógico)`: para definir una matriz de $n$ filas formada por las entradas del vector
+    - `nrow`: número de filas
+    - `byrow`: si se iguala a TRUE, la matriz se construye por filas; si se iguala a FALSE (valor por defecto), se construye por columnas.
+    -` ncol`: número de columnas (puede usarse en lugar de nrow)
+    - R muestra las matrices indicando como [$i,$] la fila $i$-ésima y [$,j$] la columna $j$-ésima
+	- Todas las entradas de una matriz han de ser del mismo tipo de datos
+	
+
+## Cómo definirlas{.exercise}
+
+**Ejercicio**
+
+- ¿Cómo definirías una matriz constante? Es decir, ¿cómo definirías una matriz $A$ tal que $\forall\  i=1,...,n; j = 1,...,m$, $a_{i,j}=k$ siendo $k\in\mathbb{R}$? Como R no admite incógnitas, prueba para el caso específico $n = 3, m = 5, k = 0$
+<!-- matrix(0, nrow = 3, ncol = 5)-->
+
+- Con el vector vec = (1,2,3,4,5,6,7,8,9,10,11,12) crea la matriz 
+$$\begin{pmatrix}
+1 & 4 & 7 & 10\\
+2 & 5 & 8 & 11\\
+3 & 6 & 9 & 12
+\end{pmatrix}$$
+<!--matrix(vec, ncol = 4)-->
+
+
+## Cómo construirlas
+
+- `rbind(vector1, vector2, ...)`: construye la matriz de filas vector1,  vector2,...
+- `cbind(vector1, vector2, ...)`: construye la matriz de columnas vector1,  vector2,...
+    - Los vectores han de tener la misma longitud
+    - También sirve para añadir columnas (filas) a una matriz o concatenar por columnas (filas) matrices con el mismo número de filas (columnas)
+- `diag(vector)`: para construir una matriz diagonal con un vector dado
+    - Si aplicamos diag a un número $n$, produce una matriz identidad de orden $n$
+
+
+
+## Submatrices
+
+- `matriz[i,j]`: indica la entrada ($i,j$) de la matriz, siendo $i,j\in\mathbb{N}$. Si $i$ y $j$ son vectores de índices, estaremos definiendo la submatriz con las filas pertenecientes al vector $i$ y columnas pertenecientes al vector $j$
+- `matriz[i,]`: indica la fila $i$-ésima de la matriz, siendo $i\in\mathbb{N}$
+- `matriz[,j]`: indica la columna $j$-ésima de la siendo $j\in\mathbb{N}$
+    - Si $i$ ($j$) es un vector de índices, estaremos definiendo la submatriz con las filas (columnas) pertenecientes al vector $i$ ($j$)
+    
+    
+## Funciones
+
+- `diag(matriz)`: para obtener la diagonal de la matriz
+- `nrow(matriz)`: nos devuelve el número de filas de la matriz
+- `ncol(matriz)`: nos devuelve el número de columnas de la matriz
+- `dim(matriz)`: nos devuelve las dimensiones de la matriz
+- `sum(matriz)`: obtenemos la suma de todas las entradas de la matriz
+- `prod(matriz)`: obtenemos el producto de todas las entradas de la matriz
+- `mean(matriz)`: obtenemos la media aritmética de todas las entradas de la matriz
+
+
+## Funciones 
+
+- `colSums(matriz)`: obtenemos las sumas por columnas de la matriz
+- `rowSums(matriz)`: obtenemos las sumas por filas de la matriz
+- `colMeans(matriz)`: obtenemos las medias aritméticas por columnas de la matriz
+- `rowMeans(matriz)`: obtenemos las medias aritméticas por filas de la matriz
+
+
+## Funciones
+
+<div class="example">
+**Ejemplo**
+
+Dada la matriz $$A = \begin{pmatrix}
+1 & 4 & 7\\
+2 & 5 & 8\\
+3 & 6 & 9
+\end{pmatrix}$$
+</div>
+
+```{r}
+A = matrix(c(1,2,3,4,5,6,7,8,9), ncol = 3)
+dim(A)
+diag(A)
+```
+
+
+## Función apply()
+
+- `apply(matriz, MARGIN=..., FUN=función)`: para aplicar otras funciones a las filas o las columnas de una matriz
+    - `MARGIN`: ha de ser 1 si queremos aplicar la función por filas; 2 si queremos aplicarla por columnas; o c(1,2) si la queremos aplicar a cada entrada
+ 
+ 
+## Función apply()
+
+```{r}
+apply(A, MARGIN = c(1,2), FUN = cuadrado)
+apply(A, MARGIN = 1, FUN = sum)
+apply(A, MARGIN = 2, FUN = sum)
+```
+
+
+## Operaciones
+
+- `t(matriz)`: para obtener la transpuesta de la matriz
+- `+`: para sumar matrices
+- `*`: para el producto de un escalar por una matriz
+- `%*%`: para multiplicar matrices
+- `mtx.exp(matriz,n)`: para elevar la matriz a $n$
+    - Del paquete `Biodem`
+		- No calcula las potencias exactas, las aproxima
+- `%^%`: para elevar matrices
+    - Del paquete `expm`
+		- No calcula las potencias exactas, las aproxima
+
+
+## Operaciones {.exercise}
+
+**Ejercicio**
+
+Observad qué ocurre si, siendo $A = \begin{pmatrix}
+2 & 0 & 2\\
+1 & 2 & 3\\
+0 & 1 & 3
+\end{pmatrix}$ y $B = \begin{pmatrix}
+3 & 2 & 1\\
+1 & 0 & 0\\
+1 & 1 & 1
+\end{pmatrix}$, realizamos las operaciones $A*B$, $A^2$ y $B^3$
+
+
+
+## Operaciones			
+			
+- `det(matriz)`: para calcular el determinante de la matriz
+- `qr(matriz)$rank`: para calcular el rango de la matriz
+- `solve(matriz)`: para calcular la inversa de una matriz invertible
+    - También sirve para resolver sistemas de ecuaciones lineales. Para ello introducimos `solve(matriz,b)`, donde $b$ es el vector de términos independientes
+    
+    
+## Valores y vectores propios
+
+[Vector propio y valor propio](https://es.wikipedia.org/wiki/Vector_propio_y_valor_propio)
+
+- `eigen(matriz)`: para calcular los valores (vaps) y vectores propios (veps)
+    - `eigen(matriz)$values`: nos da el vector con los vaps de la matriz en orden decreciente de su valor absoluto y repetidos tantas veces como su multiplicidad algebraica.
+    - `eigen(matriz)$vectors`: nos da una matriz cuyas columnas son los veps de la matriz.
+    
+## Valores y vectores propios
+
+```{r}
+M = rbind(c(2,6,-8), c(0,6,-3), c(0,2,1))
+eigen(M)
+```
+
+
+## Valores y vectores propios {.exercise}
+
+**Ejercicio**
+
+Comprobad, con los datos del ejemplo anterior, que si $P$ es la matriz de vectores propios de $M$ en columna y $D$ la matriz diagonal cuyas entradas son los valores propios de $M$, entoces se cumple la siguiente igualdad llamada **descomposición canónica**: $$M = P\cdot D\cdot P^{-1}$$
+
+
+## Valores y vectores propios
+
+Si hay algún vap con multiplicidad algebraica mayor que 1 (es decir, que aparece más de una vez), la función `eigen()` da tantos valores de este vap como su multiplicidad algebraica indica. Además, en este caso, R intenta que los veps asociados a cada uno de estos vaps sean [linealmente independientes](https://es.wikipedia.org/wiki/Dependencia_e_independencia_lineal). Por tanto, cuando como resultado obtenemos veps repetidos asociados a un vap de multiplicidad algebraica mayor que 1, es porque para este vap no existen tantos veps linealmente independientes como su multiplicidad algebraica y, por consiguiente, la matriz no es [diagonalizable](https://es.wikipedia.org/wiki/Matriz_diagonalizable).
+
+
+## Valores y vectores propios
+
+```{r}
+M = matrix(c(0,1,0,-7,3,-1,16,-3,4), nrow=3, byrow=TRUE)
+eigen(M)
+```
+    
+
 
