@@ -500,7 +500,7 @@ $$\begin{pmatrix}
     
 ## Funciones
 
-- `diag(matriz)`: para obtener la diagonal de la matriz
+- `diag(matriz)`: para obtener la diagonal de la matriz. 
 - `nrow(matriz)`: nos devuelve el número de filas de la matriz
 - `ncol(matriz)`: nos devuelve el número de columnas de la matriz
 - `dim(matriz)`: nos devuelve las dimensiones de la matriz
@@ -583,7 +583,7 @@ Observad qué ocurre si, siendo $A = \begin{pmatrix}
 
 ## Operaciones			
 			
-- `det(matriz)`: para calcular el determinante de la matriz
+- `det(matriz)`: para calcular el determinante de la matriz. Debe ser cuadrada.
 - `qr(matriz)$rank`: para calcular el rango de la matriz
 - `solve(matriz)`: para calcular la inversa de una matriz invertible
     - También sirve para resolver sistemas de ecuaciones lineales. Para ello introducimos `solve(matriz,b)`, donde $b$ es el vector de términos independientes
@@ -624,5 +624,5 @@ M = matrix(c(0,1,0,-7,3,-1,16,-3,4), nrow=3, byrow=TRUE)
 eigen(M)
 ```
     
-
+* __No se puede hallar el determinante de una matriz de números complejos. En su lugar, se hace el producto de la matriz de valores propios__
 
