@@ -1,0 +1,128 @@
+---
+title: "Ejercicios sobre LaTex, R y Markdown"
+author: "Javier Trujillo"
+date: "17/2/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Preguntas
+
+## Pregunta 1
+
+Realizad los siguientes productos de matrices siguiente en R:
+
+$$A\cdot B$$ $$B\cdot A$$ $$(A \cdot B)^{t}$$ $$B^{t} \cdot A$$ $$(A \cdot B)^{-1}$$ $$A^{-1} \cdot B^{t}$$
+
+donde $$ A =\begin{pmatrix} 
+1&2&3&4 \\ 4&3&2&1\\ 0&1&0&2\\3 &0&4&0 \end{pmatrix} \ \ \ \ B=\begin{pmatrix} 4&3&2&1\\ 0&3&0&4 \\1&2&3&4 \\0&1&0&2\end{pmatrix} $$ 
+
+
+### Chunks:
+
+```{r Pregunta_1, echo=TRUE}
+A = matrix(c(1,2,3,4,4,3,2,1,0,1,0,2,3,0,4,0), nrow=4,byrow = TRUE)
+
+B= matrix(c(4,3,2,1,0,3,0,4,1,2,3,4,0,1,0,2), nrow=4, byrow=TRUE)
+
+A %*% B
+
+B %*% A
+
+t(A) %*% t(B)
+
+t(B) %*% A
+
+solve(A) %*% solve(B)
+
+round(solve(A) %*% t(B),2)
+
+```
+
+### LaTex
+
+
+Finalmente, escribe haciendo uso de $\ LaTeX$ el resultado de los dos primeros productos de forma adecuada.
+
+
+
+$$A\cdot B = \begin{pmatrix} 
+1&2&3&4 \\ 4&3&2&1\\ 0&1&0&2\\3 &0&4&0 \end{pmatrix} \cdot \begin{pmatrix} 4&3&2&1\\ 0&3&0&4 \\1&2&3&4 \\0&1&0&2\end{pmatrix} = \begin{pmatrix}7&19&11&29\\18&26&14&26\\0&5&0&8\\16&17&18&19\end{pmatrix}$$
+$$B\cdot A = \begin{pmatrix} 4&3&2&1\\ 0&3&0&4 \\1&2&3&4 \\0&1&0&2\end{pmatrix} \cdot \begin{pmatrix} 
+1&2&3&4 \\ 4&3&2&1\\ 0&1&0&2\\3 &0&4&0 \end{pmatrix} = \begin{pmatrix}19&19&22&23\\24&9&22&3\\21&11&23&12\\10&3&10&1\end{pmatrix}$$
+$$(A\cdot B)^{t} = \begin{pmatrix} 1  &  4  &  0  &  3\\2 & 3 & 1 & 0\\3  &  2  &  0  &  4\\ 4  &  1  &  2  &  0 \end{pmatrix}\cdot \begin{pmatrix} 4  &  0  &  1  &  0\\ 3  &  3  &  2  &  1\\  2 &   0 &   3 &   0 \\ 1  &  4  &  4  &  2\end{pmatrix} = \begin{pmatrix}19&24&21&10\\19&9&11&3\\22&22&23&10\\ 23&3&12&1\end{pmatrix}$$
+$$B^{t}\cdot A = \begin{pmatrix} 4  &  0  &  1  &  0\\ 3  &  3  &  2  &  1\\  2 &   0 &   3 &   0 \\ 1  &  4  &  4  &  2\end{pmatrix} \begin{pmatrix} 
+1&2&3&4 \\ 4&3&2&1\\ 0&1&0&2\\3 &0&4&0 \end{pmatrix} = \begin{pmatrix}4&9&12&18\\ 18&17&19&19\\ 2&7&6&14\\ 23&18&19&16\end{pmatrix}$$
+$$(A\cdot B)^{-1} = \begin{pmatrix} -0.8  & 0.0 & 1.6 & 0.6 \\ 0.8  & 0.4 & -1.8 & -0.8\\0.6 &  0.0 & -1.2 & -0.2\\-0.4 & -0.2 &  1.4 &  0.4 \end{pmatrix} \cdot \begin{pmatrix}0.3 & -0.75 & -0.2 &  1.75\\ 0.0 &  1.00 &  0.0 & -2.00 \\ -0.1 &  0.25 &  0.4 & -1.25 \\ 0.0 & -0.50 &  0.0 &  1.50 \end{pmatrix} = \begin{pmatrix}-0.40 & 0.70 & 0.80 & -2.50\\  0.42 &-0.25 & -0.88 & 1.65 \\ 0.30 & -0.65 &  -0.60 & 2.25 \\ -0.26 & 0.25  & 0.64 & -1.45 \end{pmatrix}$$
+$$A^{-1}\cdot B^{t} = \begin{pmatrix} -0.8  & 0.0 & 1.6 & 0.6 \\ 0.8  & 0.4 & -1.8 & -0.8\\0.6 &  0.0 & -1.2 & -0.2\\-0.4 & -0.2 &  1.4 &  0.4 \end{pmatrix} \cdot \begin{pmatrix} 4  &  0  &  1  &  0\\ 3  &  3  &  2  &  1\\  2 &   0 &   3 &   0 \\ 1  &  4  &  4  &  2\end{pmatrix} = \begin{pmatrix}0.6 & 2.4 & 6.4  & 1.2\\ 0.0 & -2.0 & -7.0 & -1.2\\ -0.2 & -0.8 & -3.8 & -0.4 \\ 1.0 &  1.0 &  5.0 & 0.6\end{pmatrix}$$
+
+## Pregunta 2
+
+Considerad en un vector los números de vuestro DNI y llamadlo dni. Por ejemplo, si vuestro DNI es 54201567K, vuestro vector será $$dni= (5, 4, 2,0,1,5,6,7) $$
+
+Definid el vector en R. Calculad con R el vector dni al cuadrado, la raíz cuadrada del vector dni y, por último, la suma de todas las cifras del vector dni.
+
+
+### Chunks
+
+```{r Pregunta_2, echo=TRUE}
+dni= c(4,7,4,1,0,0,2,8)
+dni^2
+round(sqrt(dni),2)
+cumsum(dni)
+
+```
+
+
+### LaTex
+
+Finalmente, escribid todos estos vectores también a $\ LaTeX$
+
+$$dni=\begin{pmatrix} 4 &7&4&1&0&0&2&8 \end{pmatrix}$$ $$dni^{2}= \begin{pmatrix}16 & 49 & 16 &  1 &  0 & 0 & 4 & 64\end{pmatrix} $$ $$\sqrt{dni} = \begin{pmatrix} 2.00 & 2.65 & 2.00 & 1.00 & 0.00 & 0.00 & 1.41 & 2.83\end{pmatrix}$$ $$\sum_{i=1}^{n}dni=\begin{pmatrix} 4 & 11 & 15 & 16 & 16 & 16 & 18 & 26 \end{pmatrix}$$
+
+
+## Pregunta 3
+
+Considerad el vector de las letras de vuestro nombre y apellido. Llamadlo name. Por ejemplo, en mi caso sería $$nombre = (M,A,R,I,A,S,A,N,T,O,S)$$
+
+Definid dicho vector en R. Calculad el subvector que solo contenga vuestro nombre. Calculad también el subvector que contenga solo vuestro apellido. Ordenadlo alfabéticamente. Cread una matriz con este vector. 
+
+
+### Chunks
+
+```{r}
+name = c ("J","A","V","I","E","R","T","R","U","J","I","L","L","O")
+name[1:6]
+name[7:length(name)]
+name.ord= name[order(name)]
+name.ord
+m.name= matrix(name, nrow=2, byrow = TRUE)
+m.name
+```
+
+
+### LaTex
+
+
+Redactad todos vuestros resultados y utilizad $\ LaTeX$ cuando pertoque. 
+
+
+Se crea el vector name: $$name= \begin{pmatrix} J \ A \ V\  I\  E\  R\ T\  R\ U\ J\ I\ L\ L\ O \end{pmatrix}$$ 
+***En esta línea MiKTeX me lanzaba un error sobre las pestañas de alineación (al intentar copiar el texto del error aquí me lanza otro error similar)**.Se han separado los valores con \(espacio) para que la visualización sea más cómoda.
+
+
+
+Se calcula el subvector formado por el nombre: $$name.nom= \begin{pmatrix} J & A & V & I & E & R \end{pmatrix}$$ 
+
+
+Se calcula el subvector formado por el apellido:  $$name.ape= \begin{pmatrix} T & R & U & J & I & L & L & O \end{pmatrix}$$ 
+
+
+Se crea un nuevo vector que resulta de ordenar alfabéticamente el vector original "name": $$name.ord = \begin{pmatrix} A \  E \   I\   I\   J\   J\   L\   L\   O\   R\   R\   T\   U\   V \end{pmatrix}$$ 
+***En esta línea MiKTeX me lanzaba un error sobre las pestañas de alineación (al intentar copiar el texto del error aquí me lanza otro error similar)**. Se han separado los valores con \(espacio) para que la visualización sea más cómoda.
+
+
+Se crea una matriz (m.name) de 2x7 a partir del vector original "name": $$m.name = \begin{pmatrix} J & A & V & I & E & R & T \\ R & U & J & I & L & L & O \end{pmatrix}$$
