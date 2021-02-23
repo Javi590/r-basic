@@ -1,8 +1,8 @@
 ---
 title: "Pruebanueva"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -35,8 +35,25 @@ La función use_python("/directoriodepython3") permite utilizar todos los paquet
 
 Con py_install("nombre_de_librería") podemos cargar las librerías individualmente.
 
-Cuando creamos la variable en R os la asociamos a la función de importar(sistemaoperativo) que permite, evocando a dicha variable acceder a las funciones de python en R, como listdir("."), que crea un listado de los ficheros que se encuentran en la ubicación del markdown (de momento):
+Cuando creamos la variable en R os la asociamos a la función de importar(sistemaoperativo) que permite, evocando a dicha variable con un $, acceder a las funciones de python en R, como listdir("."), que crea un listado de los ficheros que se encuentran en la ubicación del markdown, o la librería math.Esto hace que podamos usar funciones de Python, pero la salida es lenguaje de `R`, (por lo que tendremos que usar py_to_r(variable) si queremos que se vea en el lenguaje de Python.
 
+```{python prueba_chunk_python, echo=TRUE}
+
+import math
+
+math.pi
+
+math.e
+
+math.sqrt(4)
+
+2^2 #No coge la potencia, el sombrerito es de R
+
+2**2 #el doble asterisco es la potencia en Python
+
+
+#Efectivamente, la salida es python (No tiene [1])
+```
 
 
 ```{r instalar_y_usar_python_en_R, echo=TRUE}
@@ -47,6 +64,19 @@ py_install("numpy")
 
 os <- import("os")
 os$listdir(".")
+
+
+math = import("math")
+math$pi
+math$e
+math$exp(2)
+
+# math.tau Sin embargo, si intentamos acceder como si fuera Python lanza error
+
+m= math$sqrt(32)
+
+r_to_py(m)
+
 ```
 
 #### Curioso
@@ -97,9 +127,9 @@ a # Mostramos a
 
 #Se crea el objeto que es de pyhton desde R.
 
-b <- np_array(c(1:10), order="C") # Con __order=""__ Se le indica que para crearlo se utilice el estilo de guardado en memoria de **C** en lugar del estilo de forttrump, que es el que utiliza python para optimizar los calculos de muchos números. 
+b <- np_array(c(1:10), order="C") # Con order="C" Se le indica que para crearlo se utilice el estilo de guardado en memoria de **C** en lugar del estilo de forttrump, que es el que utiliza python para optimizar los calculos de muchos números. 
 
-# Lo mismo ocurre con los **dataframes**: un dataframe de R se suele convertir directamente a un dataframe de Pandas, de modo que la regla es conservar filas y columnas, salvo por el hecho de que los factores de R no existen en Python, se convierten en variables categoricas. El problema más gordo suele venir con las fechas: cuidado cuando manejemos fechas en R en formato posixs porque se convertiran a columnas de datos numericos en numpy con el tipo de dato datetime de 64 bits.
+# Lo mismo ocurre con los **dataframes**: un dataframe de R se suele convertir directamente a un dataframe de Pandas, de modo que la regla es conservar filas y columnas, salvo por el hecho de que los factores de R no existen en Python, se convierten en variables categoricas. El problema más gordo suele venir con las fechas: cuidado cuando manejemos fechas en R en formato ¿posixs? porque se convertiran a columnas de datos numericos en numpy con el tipo de dato datetime de 64 bits.
 
 b # Mostramos b
 
@@ -109,7 +139,7 @@ b # Mostramos b
 
 ```{python escribir_directamente_en_python, echo=TRUE}
 import numpy as np
-import pandas as pd # No ha corrido pandas, lo instalo por consola en R (py_install("pandas")
+import pandas as pd # No ha corrido pandas, lo instalo por consola en R (py_install("pandas"))
 
 
 ```
@@ -121,13 +151,13 @@ datos <- iris
 head(datos)
 ```
 
-### Si quisieramos utilizar el dataset (los datos) en python, tendríamos que pasar la información a python desde la chunk de r (generalmente), creando una variable llamada datos_py, que toma la tranformación de "datos"(dataframe de r) de r a python:
+Si quisieramos utilizar el dataset (los datos) en python, tendríamos que pasar la información a python desde la chunk de r (generalmente), creando una variable llamada datos_py, que toma la tranformación de "datos"(dataframe de r) de r a python:
 
 ```{r transformamos_datos_de_r_a_python, echo=TRUE}
 datos_py <- r_to_py(datos)
 ```
 
-Y posteriormente, desde la chunk de python y con la función **r.** accedemos a cualquier módilo, función, variable, clase.. de r expuesta a python a trqavés de r_to_py:
+Y posteriormente, desde la chunk de python y con la función **r.** accedemos a cualquier módulo, función, variable, clase.. de r expuesta a python a través de r_to_py:
 
 ```{python utilizando_r_to_py, echo=TRUE}
 r.datos_py
@@ -144,13 +174,13 @@ set.seed(123)
 sparse_mat <- sparseMatrix(
   i= sample (N,N, replace = F), #Filas, aleatorias sin reemplazo
   j= sample (N,N, replace = F),
-  x = runif(N), # número aleatorio uniforme entre 0 y N
+  x = runif(N), # número real aleatorio uniforme entre 0 y N
   dims= c(N,N) #Dimensiones de la matriz
 )
 
 sparse_mat
 
-# Ahora utilizamos la función R to py:
+# Ahora utilizamos la función R to py para transformar sparse_mat en R en sparse_mat_py:
 sparse_mat_py<- r_to_py(sparse_mat) # No me rula el tema, pone que hay error en x, compruebo código y va bien. Vuelvo a cargar numpy, y tampoco. SOLUCIONADO: Instalo por consola py_install("scipy").
 ```
 
