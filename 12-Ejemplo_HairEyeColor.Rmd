@@ -1,0 +1,68 @@
+---
+title: "12-people"
+author: "Javier Trujillo"
+date: "13/5/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+#Ejemplo de color de ojos y de pelo
+
+Son datos agregados, no dan los datos por individuos separados.
+
+Es habitual encontrarlos en los datos del INE.
+
+Se pueden hacer operaciones sobre estas tablas.
+
+```{r}
+HairEyeColor
+
+
+sum(HairEyeColor) -> total
+```
+
+El total de individuos de la tabla es `r total`
+
+```{r}
+prop.table(HairEyeColor, margin=3)
+
+
+prop.table(HairEyeColor, margin = c(1,2))
+```
+Cambiar el orden de las variables. Se pueden permutar para visualizarlos como nos interese.
+
+
+```{r}
+aperm(HairEyeColor, perm = c("Sex", "Hair", "Eye"))
+```
+
+para mostrar las tablas de datos de una forma más estética podemos usar la librería kable y kableExtra
+
+
+### KableExtra
+
+```{r}
+library(kableExtra)
+kable(HairEyeColor)
+
+```
+No es el formato más adecuado para ver tablas de 3 o más variables.
+
+
+### Xtable
+Otra librería para formatear tablas es xtable
+
+
+```{r, results='asis'}
+library(knitr)
+
+sexo = c(rep("H",6), rep("M", 14))
+respuestas = sample(c("si", "no"), length(sexo), replace= TRUE)
+
+xtable(table(sexo,respuestas)) #En este caso no termina de compilar el documento. Se usa para bidimensionales, y hace la tabla más "bonita"
+```
+
+
+
